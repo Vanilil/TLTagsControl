@@ -78,7 +78,8 @@
     tagInputField_ = [[UITextField alloc] initWithFrame:self.frame];
     tagInputField_.layer.cornerRadius = 5;
     tagInputField_.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    tagInputField_.backgroundColor = [UIColor whiteColor];
+    UIColor *BackgrounColor = _viewBackgroundColor != nil ? _viewBackgroundColor : [UIColor clearColor] ;
+    tagInputField_.backgroundColor = BackgrounColor;
     tagInputField_.delegate = self;
     tagInputField_.placeholder = @"tag";
     tagInputField_.autocorrectionType = UITextAutocorrectionTypeNo;
