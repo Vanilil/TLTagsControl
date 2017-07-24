@@ -399,6 +399,8 @@
 -(void) setViewBackgroundColor:(UIColor *)viewBackgroundColor
 {
     _viewBackgroundColor = viewBackgroundColor;
+    UIColor *BackgrounColor = _viewBackgroundColor != nil ? _viewBackgroundColor : [UIColor clearColor];
+    tagInputField_.backgroundColor = BackgrounColor;
 }
 
 -(void) setTagsBackgroundColor:(UIColor *)tagsBackgroundColor
