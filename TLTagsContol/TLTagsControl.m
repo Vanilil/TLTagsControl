@@ -421,6 +421,11 @@
 
 #pragma mark - other
 
+- (UITextField *) getTagInput
+{
+    return tagInputField_;
+}
+
 - (void)setMode:(TLTagsControlMode)mode {
     _mode = mode;
 }
@@ -476,7 +481,7 @@
 
 -(void) setChooseTaggWithClic:(BOOL)chooseTaggWithClic
 {
-    chooseTaggWithClic = chooseTaggWithClic;
+    _chooseTaggWithClic = chooseTaggWithClic;
 }
 
 -(void) setAutocomplete:(BOOL)autocomplete

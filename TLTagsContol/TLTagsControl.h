@@ -51,5 +51,6 @@ IB_DESIGNABLE @interface TLTagsControl : UIScrollView
 - (void)dismissKeyboard;
 - (void)reloadTagSubviews;
 - (void)setKeyboardFocus;
+- (UITextField *) getTagInput;
 
 @end
