@@ -69,15 +69,20 @@
 - (void)commonInit {
     _tags = [NSMutableArray array];
     
-    self.layer.cornerRadius = 5;
+    if(tagSubviews_ == nil)
+        tagInputField_ = [[UITextField alloc] initWithFrame:self.frame];
     
     tagSubviews_ = [NSMutableArray array];
     
     _font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     
-    tagInputField_ = [[UITextField alloc] initWithFrame:self.frame];
-    tagInputField_.layer.cornerRadius = 5;
-    tagInputField_.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    CGRect frame = tagInputField_.frame;
+    frame.origin.y = (_marginTags / 2);
+    frame.size.height = frame.size.height - _marginTags;
+    tagInputField_.frame = frame;
+    tagInputField_.layer.cornerRadius = _tagsCornerRadius;
+    tagInputField_.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
     UIColor *BackgrounColor = _viewBackgroundColor != nil ? _viewBackgroundColor : [UIColor clearColor] ;
     tagInputField_.backgroundColor = BackgrounColor;
     tagInputField_.delegate = self;
@@ -95,7 +100,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGSize contentSize = self.contentSize;
-    CGRect frame = CGRectMake(0, 0, 100, self.frame.size.height);
+    CGRect frame = CGRectMake(0, 0, 100, self.frame.size.height - _marginTags);
     CGRect tempViewFrame;
     NSInteger tagIndex = 0;
     for (UIView *view in tagSubviews_) {
@@ -105,9 +110,9 @@
             UIView *prevView = tagSubviews_[index - 1];
             tempViewFrame.origin.x = prevView.frame.origin.x + prevView.frame.size.width + 4;
         } else {
-            tempViewFrame.origin.x = 0;
+            tempViewFrame.origin.x = 7;
         }
-        tempViewFrame.origin.y = frame.origin.y;
+        tempViewFrame.origin.y = (_marginTags / 2);
         view.frame = tempViewFrame;
         
         if (_mode == TLTagsControlModeList) {
@@ -155,6 +160,7 @@
     
     self.contentSize = contentSize;
     
+    tagInputField_.layer.cornerRadius = _tagsCornerRadius;
     tagInputField_.placeholder = (_tagPlaceholder == nil) ? @"tag" : _tagPlaceholder;
 }
 
@@ -211,9 +217,10 @@
         
         UIView *tagView = [[UIView alloc] initWithFrame:tagInputField_.frame];
         CGRect tagFrame = tagView.frame;
-        tagView.layer.cornerRadius = 5;
-        tagFrame.origin.y = tagInputField_.frame.origin.y;
+        tagView.layer.cornerRadius = _tagsCornerRadius;
         tagView.backgroundColor = tagBackgrounColor;
+        tagView.layer.borderColor = _tagsBorderColor.CGColor;
+        tagView.layer.borderWidth = _tagsBordersize;
         
         UILabel *tagLabel = [[UILabel alloc] init];
         CGRect labelFrame = tagLabel.frame;
@@ -369,12 +376,52 @@
     _tagPlaceholder = tagPlaceholder;
 }
 
+- (void)setTagsCornerRadius:(CGFloat)tagsCornerRadius {
+    _tagsCornerRadius = tagsCornerRadius;
+}
+
+-(void) setMarginTags:(CGFloat)marginTags
+{
+    _marginTags = marginTags;
+}
+
+-(void) setViewBackgroundColor:(UIColor *)viewBackgroundColor
+{
+    _viewBackgroundColor = viewBackgroundColor;
+}
+
+-(void) setTagsBackgroundColor:(UIColor *)tagsBackgroundColor
+{
+    _tagsBackgroundColor = tagsBackgroundColor;
+}
+
+-(void) setTagsTextColor:(UIColor *)tagsTextColor
+{
+    _tagsTextColor = tagsTextColor;
+}
+
+-(void) setTagsDeleteButtonColor:(UIColor *)tagsDeleteButtonColor
+{
+    _tagsDeleteButtonColor = tagsDeleteButtonColor;
+}
+
+-(void) setTagsBorderColor:(UIColor *)tagsBorderColor
+{
+     _tagsBorderColor = tagsBorderColor;
+}
+
+-(void) setTagsBordersize:(CGFloat)tagsBordersize
+{
+    _tagsBordersize = tagsBordersize;
+}
+
 - (void)gestureAction:(id)sender {
     UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
     if ([self.tapDelegate respondsToSelector:@selector(tagsControl:tappedAtIndex:)]) {
         [tapDelegate tagsControl:self tappedAtIndex:tapRecognizer.view.tag];
     }
 }
+
 - (void)setKeyboardFocus {
     [tagInputField_ becomeFirstResponder];
 }

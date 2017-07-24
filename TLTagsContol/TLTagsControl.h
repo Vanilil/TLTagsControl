@@ -22,16 +22,20 @@ typedef NS_ENUM(NSUInteger, TLTagsControlMode) {
     TLTagsControlModeList,
 };
 
-@interface TLTagsControl : UIScrollView
+IB_DESIGNABLE @interface TLTagsControl : UIScrollView
 
 @property (nonatomic, strong) NSMutableArray *tags;
-@property (nonatomic, strong) UIColor *viewBackgroundColor;
-@property (nonatomic, strong) UIColor *tagsBackgroundColor;
-@property (nonatomic, strong) UIColor *tagsTextColor;
-@property (nonatomic, strong) UIColor *tagsDeleteButtonColor;
-@property (nonatomic, strong) NSString *tagPlaceholder;
+@property (nonatomic, strong) IBInspectable UIColor *viewBackgroundColor;
+@property (nonatomic, strong) IBInspectable UIColor *tagsBackgroundColor;
+@property (nonatomic, strong) IBInspectable UIColor *tagsTextColor;
+@property (nonatomic, strong) IBInspectable UIColor *tagsDeleteButtonColor;
+@property (nonatomic, strong) IBInspectable UIColor *tagsBorderColor;
+@property (nonatomic) IBInspectable CGFloat tagsBordersize;
+@property (nonatomic, strong) IBInspectable NSString *tagPlaceholder;
 @property (nonatomic, strong) UIFont *font;
 @property (nonatomic) TLTagsControlMode mode;
+@property (nonatomic) IBInspectable CGFloat marginTags;
+@property (nonatomic) IBInspectable CGFloat tagsCornerRadius;
 
 @property (assign, nonatomic) id<TLTagsControlDelegate> tapDelegate;
 
