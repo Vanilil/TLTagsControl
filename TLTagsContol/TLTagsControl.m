@@ -340,7 +340,8 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if (textField.text.length > 0 && self.autocomplete)
     {
         [self.tapDelegate textFieldShouldreturn:self textField:textField];
@@ -360,40 +361,62 @@
     [self setIsActive:NO];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString *resultingString;
-    NSString *text = textField.text;
-    
-    
-    if (string.length == 1 && [string rangeOfCharacterFromSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]].location != NSNotFound) {
-        return NO;
-    } else {
-        if (!text || [text isEqualToString:@""]) {
-            resultingString = string;
-        } else {
-            if (range.location + range.length > text.length) {
-                range.length = text.length - range.location;
-            }
-            
-            resultingString = [textField.text stringByReplacingCharactersInRange:range
-                                                                      withString:string];
-        }
-        
-        NSArray *components = [resultingString componentsSeparatedByCharactersInSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
-        
-        if (components.count > 2) {
-            for (NSString *component in components) {
-                if (component.length > 0 && [component rangeOfCharacterFromSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]].location == NSNotFound) {
-                    [self addTag:component];
-                    break;
-                }
-            }
-            
-            return NO;
-        }
-        
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField.text.length > 0 && self.autocomplete)
+    {
+        [self.tapDelegate shouldChangeCharactersInRange:range tagsControl:self textField:textField replacementString:string];
         return YES;
     }
+    else
+    {
+        NSString *resultingString;
+        NSString *text = textField.text;
+        
+        NSMutableCharacterSet *characterSet = [NSMutableCharacterSet alphanumericCharacterSet];
+        [characterSet addCharactersInString:@" "];
+        
+        if (string.length == 1 && [string rangeOfCharacterFromSet:[characterSet invertedSet]].location != NSNotFound)
+        {
+            return NO;
+        }
+        else
+        {
+            if (!text || [text isEqualToString:@""])
+            {
+                resultingString = string;
+            }
+            else
+            {
+                if (range.location + range.length > text.length)
+                {
+                    range.length = text.length - range.location;
+                }
+                
+                resultingString = [textField.text stringByReplacingCharactersInRange:range
+                                                                          withString:string];
+            }
+            
+            NSArray *components = [resultingString componentsSeparatedByCharactersInSet:[characterSet invertedSet]];
+            
+            if (components.count > 2)
+            {
+                for (NSString *component in components)
+                {
+                    if (component.length > 0 && [component rangeOfCharacterFromSet:[characterSet invertedSet]].location == NSNotFound)
+                    {
+                        [self addTag:component];
+                        break;
+                    }
+                }
+                
+                return NO;
+            }
+            
+            return YES;
+        }
+    }
+    
 }
 
 #pragma mark - other

@@ -16,6 +16,7 @@
 - (void) actionToChooseTags:(TLTagsControl *)tagsControl;
 - (void)tagsControl:(TLTagsControl *)tagsControl removedAtIndex:(NSInteger)index;
 - (void) textFieldShouldreturn:(TLTagsControl *)tagsControl textField:(UITextField *) textField;
+- (void) shouldChangeCharactersInRange:(NSRange)range tagsControl:(TLTagsControl *)tagsControl textField:(UITextField *)textField replacementString:(NSString *)string;
 
 @end
 
