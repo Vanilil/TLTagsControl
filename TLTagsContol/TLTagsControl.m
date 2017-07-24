@@ -86,7 +86,7 @@
     tagInputField_.layer.cornerRadius = _tagsCornerRadius;
     tagInputField_.layer.borderColor = [UIColor darkGrayColor].CGColor;
     
-    UIColor *BackgrounColor = _viewBackgroundColor != nil ? _viewBackgroundColor : [UIColor clearColor] ;
+    UIColor *BackgrounColor = _viewBackgroundColor != nil ? _viewBackgroundColor : [UIColor clearColor];
     tagInputField_.backgroundColor = BackgrounColor;
     tagInputField_.delegate = self;
     tagInputField_.placeholder = @"tag";
@@ -216,6 +216,11 @@
     
     tagInputField_.font = self.font;
     
+    CGRect frame = self.frame;
+    frame.origin.y = (_marginTags / 2);
+    frame.size.height = frame.size.height - _marginTags;
+    tagInputField_.frame = frame;
+    
     for (NSString *tag in _tags) {
         float width = [tag boundingRectWithSize:CGSizeMake(3000,tagInputField_.frame.size.height)
                                         options:NSStringDrawingUsesLineFragmentOrigin
@@ -329,7 +334,7 @@
 {
     if(_chooseTaggWithClic)
     {
-         [self.tapDelegate actionToChooseTags:self];
+        [self.tapDelegate actionToChooseTags:self];
         return NO;
     }
     else
@@ -471,7 +476,7 @@
 
 -(void) setTagsBorderColor:(UIColor *)tagsBorderColor
 {
-     _tagsBorderColor = tagsBorderColor;
+    _tagsBorderColor = tagsBorderColor;
 }
 
 -(void) setTagsBordersize:(CGFloat)tagsBordersize
