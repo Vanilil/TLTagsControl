@@ -23,6 +23,7 @@
     self = [super init];
     
     if (self != nil) {
+        self.chooseTaggWithClic = NO;
         [self commonInit];
     }
     
@@ -316,6 +317,16 @@
 
 #pragma mark - textfield stuff
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if(_chooseTaggWithClic)
+    {
+         [self.tapDelegate actionToChooseTags:self];
+        return NO;
+    }
+    else return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField.text.length > 0) {
         NSString *tag = textField.text;
@@ -413,6 +424,11 @@
 -(void) setTagsBordersize:(CGFloat)tagsBordersize
 {
     _tagsBordersize = tagsBordersize;
+}
+
+-(void) setChooseTaggWithClic:(BOOL)chooseTaggWithClic
+{
+    chooseTaggWithClic = chooseTaggWithClic;
 }
 
 - (void)gestureAction:(id)sender {

@@ -13,6 +13,7 @@
 @protocol TLTagsControlDelegate <NSObject>
 
 - (void)tagsControl:(TLTagsControl *)tagsControl tappedAtIndex:(NSInteger)index;
+- (void) actionToChooseTags:(TLTagsControl *)tagsControl;
 - (void)tagsControl:(TLTagsControl *)tagsControl removedAtIndex:(NSInteger)index;
 
 @end
@@ -36,6 +37,7 @@ IB_DESIGNABLE @interface TLTagsControl : UIScrollView
 @property (nonatomic) TLTagsControlMode mode;
 @property (nonatomic) IBInspectable CGFloat marginTags;
 @property (nonatomic) IBInspectable CGFloat tagsCornerRadius;
+@property (nonatomic) IBInspectable BOOL chooseTaggWithClic;
 
 @property (assign, nonatomic) id<TLTagsControlDelegate> tapDelegate;
 
