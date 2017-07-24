@@ -15,6 +15,7 @@
 - (void)tagsControl:(TLTagsControl *)tagsControl tappedAtIndex:(NSInteger)index;
 - (void) actionToChooseTags:(TLTagsControl *)tagsControl;
 - (void)tagsControl:(TLTagsControl *)tagsControl removedAtIndex:(NSInteger)index;
+- (void) textFieldShouldreturn:(TLTagsControl *)tagsControl textField:(UITextField *) textField;
 
 @end
 
@@ -38,12 +39,15 @@ IB_DESIGNABLE @interface TLTagsControl : UIScrollView
 @property (nonatomic) IBInspectable CGFloat marginTags;
 @property (nonatomic) IBInspectable CGFloat tagsCornerRadius;
 @property (nonatomic) IBInspectable BOOL chooseTaggWithClic;
+@property (nonatomic) IBInspectable BOOL autocomplete;
+@property (nonatomic) BOOL isActive;
 
 @property (assign, nonatomic) id<TLTagsControlDelegate> tapDelegate;
 
 - (id)initWithFrame:(CGRect)frame andTags:(NSArray *)tags withTagsControlMode:(TLTagsControlMode)mode;
 
 - (void)addTag:(NSString *)tag;
+- (void)dismissKeyboard;
 - (void)reloadTagSubviews;
 - (void)setKeyboardFocus;
 

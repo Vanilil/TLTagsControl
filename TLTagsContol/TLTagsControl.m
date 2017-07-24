@@ -24,6 +24,8 @@
     
     if (self != nil) {
         self.chooseTaggWithClic = NO;
+        self.autocomplete = NO;
+        self.isActive = NO;
         [self commonInit];
     }
     
@@ -324,17 +326,32 @@
          [self.tapDelegate actionToChooseTags:self];
         return NO;
     }
-    else return YES;
+    else
+    {
+        [self setIsActive:YES];
+    }
+    
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField.text.length > 0) {
+    if (textField.text.length > 0 && self.autocomplete)
+    {
+        [self.tapDelegate textFieldShouldreturn:self textField:textField];
+    }
+    else if (textField.text.length > 0)
+    {
         NSString *tag = textField.text;
         textField.text = @"";
         [self addTag:tag];
     }
     
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self setIsActive:NO];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -431,6 +448,11 @@
 -(void) setChooseTaggWithClic:(BOOL)chooseTaggWithClic
 {
     chooseTaggWithClic = chooseTaggWithClic;
+}
+
+-(void) setAutocomplete:(BOOL)autocomplete
+{
+    _autocomplete = autocomplete;
 }
 
 - (void)gestureAction:(id)sender {
