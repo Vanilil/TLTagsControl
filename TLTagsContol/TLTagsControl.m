@@ -165,6 +165,8 @@
     
     tagInputField_.layer.cornerRadius = _tagsCornerRadius;
     tagInputField_.placeholder = (_tagPlaceholder == nil) ? @"tag" : _tagPlaceholder;
+    
+    [self flashScrollIndicators];
 }
 
 - (void)addTag:(NSString *)tag {
@@ -192,6 +194,8 @@
     }
     
     self.contentOffset = offset;
+    
+    [self flashScrollIndicators];
 }
 
 - (void)reloadTagSubviews {
@@ -293,6 +297,7 @@
     }
     
     [self setNeedsLayout];
+    [self flashScrollIndicators];
 }
 
 #pragma mark - buttons handlers
@@ -305,6 +310,7 @@
     [_tags removeObjectAtIndex:index];
     [self reloadTagSubviews];
     
+    [self flashScrollIndicators];
     if ([self.tapDelegate respondsToSelector:@selector(tagsControl:removedAtIndex:)]) {
         [self.tapDelegate tagsControl:self removedAtIndex:index];
     }
