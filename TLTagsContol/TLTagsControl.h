@@ -42,6 +42,7 @@ IB_DESIGNABLE @interface TLTagsControl : UIScrollView
 @property (nonatomic) IBInspectable BOOL chooseTaggWithClic;
 @property (nonatomic) IBInspectable BOOL autocomplete;
 @property (nonatomic) BOOL isActive;
+@property (nonatomic) IBInspectable BOOL placeholderAlwaysVisible;
 
 @property (assign, nonatomic) id<TLTagsControlDelegate> tapDelegate;
 

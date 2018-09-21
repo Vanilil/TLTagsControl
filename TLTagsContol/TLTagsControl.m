@@ -26,6 +26,7 @@
         self.chooseTaggWithClic = NO;
         self.autocomplete = NO;
         self.isActive = NO;
+        self.placeholderAlwaysVisible = NO;
         [self commonInit];
     }
     
@@ -159,7 +160,7 @@
     self.contentSize = contentSize;
     
     tagInputField_.layer.cornerRadius = _tagsCornerRadius;
-    tagInputField_.placeholder = (_tagPlaceholder == nil) ? @"tag" : _tagPlaceholder;
+    [self updatePlaceholderTextVisibility];
     
     [self flashScrollIndicators];
 }
@@ -298,6 +299,7 @@
     
     [self setNeedsLayout];
     [self flashScrollIndicators];
+    [self updatePlaceholderTextVisibility];
 }
 
 #pragma mark - buttons handlers
@@ -489,6 +491,12 @@
     _autocomplete = autocomplete;
 }
 
+-(void) setPlaceholderAlwaysVisible:(BOOL)placeholderAlwaysVisible
+{
+    _placeholderAlwaysVisible = placeholderAlwaysVisible;
+    [self updatePlaceholderTextVisibility];
+}
+
 - (void)gestureAction:(id)sender {
     UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
     if ([self.tapDelegate respondsToSelector:@selector(tagsControl:tappedAtIndex:)]) {
@@ -498,5 +506,9 @@
 
 - (void)setKeyboardFocus {
     [tagInputField_ becomeFirstResponder];
+}
+
+- (void) updatePlaceholderTextVisibility {
+    tagInputField_.placeholder = (_placeholderAlwaysVisible || _tags.count == 0) ? _tagPlaceholder : nil;
 }
 @end
